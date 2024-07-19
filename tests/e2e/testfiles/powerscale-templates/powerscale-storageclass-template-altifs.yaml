@@ -1,3 +1,4 @@
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -8,6 +9,6 @@ allowVolumeExpansion: true
 parameters:
   AccessZone: System
   IsiPath: /ifs/e2etest
-  IsiVolumePathPermissions: "777"
-  RootClientEnabled: "false"
+  IsiVolumePathPermissions: '777'
+  RootClientEnabled: 'false'
 volumeBindingMode: Immediate

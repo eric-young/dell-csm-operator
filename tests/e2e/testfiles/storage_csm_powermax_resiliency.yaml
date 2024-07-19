@@ -1,3 +1,4 @@
+---
 #
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
 #
@@ -20,12 +21,12 @@ metadata:
 spec:
   # Add fields here
   driver:
-    csiDriverType: "powermax"
+    csiDriverType: powermax
     csiDriverSpec:
       # fsGroupPolicy: Defines if the underlying volume supports changing ownership and permission of the volume before being mounted.
       # Allowed values: ReadWriteOnceWithFSType, File , None
       # Default value: ReadWriteOnceWithFSType
-      fSGroupPolicy: "ReadWriteOnceWithFSType"
+      fSGroupPolicy: ReadWriteOnceWithFSType
       # storageCapacity: Helps the scheduler to schedule the pod on a node satisfying the topology constraints, only if the requested capacity is available on the storage array
       # Allowed values:
       #   true: enable storage capacity tracking
@@ -56,13 +57,13 @@ spec:
         # Default value: None
         # Examples: "000000000001", "000000000002"
         - name: X_CSI_MANAGED_ARRAYS
-          value: "000000000000,000000000001"
+          value: 000000000000,000000000001
         # X_CSI_POWERMAX_ENDPOINT: Address of the Unisphere server that is managing the PowerMax arrays
         # In case of multi-array, provide an endpoint of locally attached array
         # Default value: None
         # Example: https://0.0.0.1:8443
         - name: X_CSI_POWERMAX_ENDPOINT
-          value: "https://0.0.0.0:8443/"
+          value: https://0.0.0.0:8443/
         # X_CSI_K8S_CLUSTER_PREFIX: Define a prefix that is appended onto
         # all resources created in the Array
         # This should be unique per K8s/CSI deployment
@@ -70,7 +71,7 @@ spec:
         # Default value: None
         # Examples: "XYZ", "EMC"
         - name: X_CSI_K8S_CLUSTER_PREFIX
-          value: "XYZ"
+          value: XYZ
         # Specify kubelet config dir path.
         # Ensure that the config.yaml file is present at this path.
         # Default value: None
@@ -83,7 +84,7 @@ spec:
         # Default value: None
         # Examples: "pg1", "pg1, pg2"
         - name: X_CSI_POWERMAX_PORTGROUPS
-          value: ""
+          value: ''
         # "X_CSI_TRANSPORT_PROTOCOL" can be "FC" or "FIBRE" for fibrechannel,
         # "ISCSI" for iSCSI, or "" for autoselection.
         # Allowed values:
@@ -93,38 +94,38 @@ spec:
         #   ""      - Automatic selection of transport protocol
         # Default value: "" <empty>
         - name: X_CSI_TRANSPORT_PROTOCOL
-          value: ""
+          value: ''
         # X_CSI_POWERMAX_PROXY_SERVICE_NAME: Refers to the name of the proxy service in kubernetes
         # Allowed values: "csipowermax-reverseproxy"
         # default values: "csipowermax-reverseproxy"
         - name: X_CSI_POWERMAX_PROXY_SERVICE_NAME
-          value: "csipowermax-reverseproxy"
+          value: csipowermax-reverseproxy
         # VMware/vSphere virtualization support
         # set X_CSI_VSPHERE_ENABLED to true, if you to enable VMware virtualized environment support via RDM
         # Allowed values:
         #   "true" - vSphere volumes are enabled
         #   "false" - vSphere volumes are disabled
         # Default value: "false"
-        - name: "X_CSI_VSPHERE_ENABLED"
-          value: "false"
+        - name: X_CSI_VSPHERE_ENABLED
+          value: 'false'
         # X_CSI_VSPHERE_PORTGROUP: An existing portGroup that driver will use for vSphere
         # recommended format: csi-x-VC-PG, x can be anything of user choice
         # Allowed value: valid existing port group on the array
         # Default value: "" <empty>
-        - name: "X_CSI_VSPHERE_PORTGROUP"
-          value: ""
+        - name: X_CSI_VSPHERE_PORTGROUP
+          value: ''
         # X_CSI_VSPHERE_HOSTNAME: An existing host(initiator group)/ host group(cascaded initiator group) that driver will use for vSphere
         # this host should contain initiators from all the ESXs/ESXi host where the cluster is deployed
         # recommended format: csi-x-VC-HN, x can be anything of user choice
         # Allowed value: valid existing host/host group on the array
         # Default value: "" <empty>
-        - name: "X_CSI_VSPHERE_HOSTNAME"
-          value: ""
+        - name: X_CSI_VSPHERE_HOSTNAME
+          value: ''
         # X_CSI_VCENTER_HOST: URL/endpoint of the vCenter where all the ESX are present
         # Allowed value: valid vCenter host endpoint
         # Default value: "" <empty>
-        - name: "X_CSI_VCENTER_HOST"
-          value: ""
+        - name: X_CSI_VCENTER_HOST
+          value: ''
     controller:
       envs:
         # X_CSI_HEALTH_MONITOR_ENABLED: Enable/Disable health monitor of CSI volumes from node plugin- volume usage, volume condition
@@ -133,7 +134,7 @@ spec:
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
     node:
       envs:
         # X_CSI_POWERMAX_ISCSI_ENABLE_CHAP: Determine if the driver is going to configure
@@ -145,14 +146,14 @@ spec:
         #   "false" - CHAP is disabled
         # Default value: "false"
         - name: X_CSI_POWERMAX_ISCSI_ENABLE_CHAP
-          value: "false"
+          value: 'false'
         # X_CSI_HEALTH_MONITOR_ENABLED: Enable/Disable health monitor of CSI volumes from node plugin- volume usage, volume condition
         # Allowed values:
         #   true: enable checking of health condition of CSI volumes
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
         # X_CSI_TOPOLOGY_CONTROL_ENABLED provides a way to filter topology keys on a node based on array and transport protocol
         # if enabled, user can create custom topology keys by editing node-topology-config configmap.
         # Allowed values:
@@ -160,17 +161,17 @@ spec:
         #   false: disable the filtration based on config map
         # Default value: false
         - name: X_CSI_TOPOLOGY_CONTROL_ENABLED
-          value: "false"
+          value: 'false'
         # X_CSI_MAX_VOLUMES_PER_NODE: Defines the maximum Powermax volumes that the controller can publish to the node
         # Allowed values: Any value greater than or equal to 0
         # Default value: "0"
         - name: X_CSI_MAX_VOLUMES_PER_NODE
-          value: "0"
+          value: '0'
     sideCars:
       # health monitor is disabled by default, refer to driver documentation before enabling it
       - name: external-health-monitor
         enabled: false
-        args: [ "--monitor-interval=60s" ]
+        args: [--monitor-interval=60s]
 
   modules:
     # CSI Powermax Reverseproxy is a mandatory module for Powermax
@@ -191,11 +192,11 @@ spec:
             # Default value: None
             # Example: "tls-secret"
             - name: X_CSI_REVPROXY_TLS_SECRET
-              value: "csirevproxy-tls-secret"
+              value: csirevproxy-tls-secret
             - name: X_CSI_REVPROXY_PORT
-              value: "2222"
+              value: '2222'
             - name: X_CSI_CONFIG_MAP_NAME
-              value: "powermax-reverseproxy-config"
+              value: powermax-reverseproxy-config
     - name: resiliency
       # enabled: Enable/Disable Resiliency feature
       # Allowed values:
@@ -209,17 +210,17 @@ spec:
           image: dellemc/podmon:v1.10.0
           imagePullPolicy: IfNotPresent
           args:
-            - "--labelvalue=csi-powermax"
-            - "--arrayConnectivityPollRate=60"
-            - "--skipArrayConnectionValidation=false"
-            - "--driverPodLabelValue=dell-storage"
-            - "--ignoreVolumelessPods=false"
-            - "--arrayConnectivityConnectionLossThreshold=3"
+            - --labelvalue=csi-powermax
+            - --arrayConnectivityPollRate=60
+            - --skipArrayConnectionValidation=false
+            - --driverPodLabelValue=dell-storage
+            - --ignoreVolumelessPods=false
+            - --arrayConnectivityConnectionLossThreshold=3
             # Below 4 args should not be modified.
-            - "--csisock=unix:/var/run/csi/csi.sock"
-            - "--mode=controller"
-            - "--driver-config-params=/powermax-config-params/driver-config-params.yaml"
-            - "--driverPath=csi-powermax.dellemc.com"
+            - --csisock=unix:/var/run/csi/csi.sock
+            - --mode=controller
+            - --driver-config-params=/powermax-config-params/driver-config-params.yaml
+            - --driverPath=csi-powermax.dellemc.com
         - name: podmon-node
           image: dellemc/podmon:v1.10.0
           imagePullPolicy: IfNotPresent
@@ -227,16 +228,16 @@ spec:
             # podmonAPIPort: Defines the port to be used within the kubernetes cluster
             # Allowed values: Any valid and free port (string)
             # Default value: 8083
-            - name: "X_CSI_PODMON_API_PORT"
-              value: "8083"
+            - name: X_CSI_PODMON_API_PORT
+              value: '8083'
           args:
-            - "--labelvalue=csi-powermax"
-            - "--arrayConnectivityPollRate=60"
-            - "--leaderelection=false"
-            - "--driverPodLabelValue=dell-storage"
-            - "--ignoreVolumelessPods=false"
+            - --labelvalue=csi-powermax
+            - --arrayConnectivityPollRate=60
+            - --leaderelection=false
+            - --driverPodLabelValue=dell-storage
+            - --ignoreVolumelessPods=false
             # Below 4 args should not be modified.
-            - "--csisock=unix:/var/lib/kubelet/plugins/powermax.emc.dell.com/csi_sock"
-            - "--mode=node"
-            - "--driver-config-params=/powermax-config-params/driver-config-params.yaml"
-            - "--driverPath=csi-powermax.dellemc.com"
+            - --csisock=unix:/var/lib/kubelet/plugins/powermax.emc.dell.com/csi_sock
+            - --mode=node
+            - --driver-config-params=/powermax-config-params/driver-config-params.yaml
+            - --driverPath=csi-powermax.dellemc.com

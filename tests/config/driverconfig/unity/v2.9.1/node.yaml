@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -9,31 +10,31 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: <DriverDefaultReleaseName>-node
 rules:
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["create", "delete", "get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list", "watch", "update", "patch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["security.openshift.io"]
-    resourceNames: ["privileged"]
-    resources: ["securitycontextconstraints"]
-    verbs: ["use"]
+  - apiGroups: ['']
+    resources: [persistentvolumes]
+    verbs: [create, delete, get, list, watch, update]
+  - apiGroups: ['']
+    resources: [persistentvolumeclaims]
+    verbs: [get, list, watch, update]
+  - apiGroups: ['']
+    resources: [events]
+    verbs: [get, list, watch, create, update, patch]
+  - apiGroups: ['']
+    resources: [nodes]
+    verbs: [get, list, watch, update, patch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [get, list, watch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [security.openshift.io]
+    resourceNames: [privileged]
+    resources: [securitycontextconstraints]
+    verbs: [use]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -73,29 +74,29 @@ spec:
           securityContext:
             privileged: true
             capabilities:
-              add: ["SYS_ADMIN"]
+              add: [SYS_ADMIN]
             allowPrivilegeEscalation: true
           image: dellemc/csi-unity:nightly
-          imagePullPolicy:  IfNotPresent
+          imagePullPolicy: IfNotPresent
           args:
-            - "--driver-name=csi-unity.dellemc.com"
-            - "--driver-config=/unity-config/driver-config-params.yaml"
-            - "--driver-secret=/unity-secret/config"
+            - --driver-name=csi-unity.dellemc.com
+            - --driver-config=/unity-config/driver-config-params.yaml
+            - --driver-secret=/unity-secret/config
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/kubelet/plugins/unity.emc.dell.com/csi_sock
             - name: X_CSI_MODE
               value: node
             - name: X_CSI_UNITY_AUTOPROBE
-              value: "true"
+              value: 'true'
             - name: X_CSI_UNITY_ALLOW_MULTI_POD_ACCESS
-              value: "false"
+              value: 'false'
             - name: X_CSI_PRIVATE_MOUNT_DIR
-              value: "/var/lib/kubelet/plugins/unity.emc.dell.com/disks"
+              value: /var/lib/kubelet/plugins/unity.emc.dell.com/disks
             - name: X_CSI_EPHEMERAL_STAGING_PATH
-              value: "/var/lib/kubelet/plugins/kubernetes.io/csi/pv/"
+              value: /var/lib/kubelet/plugins/kubernetes.io/csi/pv/
             - name: X_CSI_ISCSI_CHROOT
-              value: "/noderoot"
+              value: /noderoot
             - name: X_CSI_UNITY_NODENAME
               valueFrom:
                 fieldRef:
@@ -104,20 +105,20 @@ spec:
             - name: SSL_CERT_DIR
               value: /certs
             - name: X_CSI_UNITY_SYNC_NODEINFO_INTERVAL
-              value: "15"
+              value: '15'
             - name: X_CSI_HEALTH_MONITOR_ENABLED
-              value: "<X_CSI_HEALTH_MONITOR_ENABLED>"
+              value: <X_CSI_HEALTH_MONITOR_ENABLED>
             - name: X_CSI_UNITY_SKIP_CERTIFICATE_VALIDATION
-              value: "true"
+              value: 'true'
           volumeMounts:
             - name: driver-path
               mountPath: /var/lib/kubelet/plugins/unity.emc.dell.com
             - name: volumedevices-path
               mountPath: /var/lib/kubelet/plugins/kubernetes.io/csi
-              mountPropagation: "Bidirectional"
+              mountPropagation: Bidirectional
             - name: pods-path
               mountPath: /var/lib/kubelet/pods
-              mountPropagation: "Bidirectional"
+              mountPropagation: Bidirectional
             - name: dev
               mountPath: /dev
             - name: noderoot
@@ -132,8 +133,8 @@ spec:
         - name: registrar
           image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
           args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
+            - --v=5
+            - --csi-address=$(ADDRESS)
             - --kubelet-registration-path=/var/lib/kubelet/plugins/unity.emc.dell.com/csi_sock
           env:
             - name: ADDRESS
@@ -183,7 +184,7 @@ spec:
                       path: cert-0
         - name: unity-config
           configMap:
-              name: <DriverDefaultReleaseName>-config-params
+            name: <DriverDefaultReleaseName>-config-params
         - name: unity-secret
           secret:
-              secretName: <DriverDefaultReleaseName>-creds
+            secretName: <DriverDefaultReleaseName>-creds

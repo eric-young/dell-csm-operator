@@ -1,3 +1,4 @@
+---
 #
 #
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
@@ -19,7 +20,7 @@ imagePullPolicy: IfNotPresent
 securityContext:
   privileged: true
   capabilities:
-    add: ["SYS_ADMIN"]
+    add: [SYS_ADMIN]
   allowPrivilegeEscalation: true
 env:
   - name: KUBE_NODE_NAME
@@ -44,13 +45,13 @@ env:
 volumeMounts:
   - name: kubelet-pods
     mountPath: <KUBELET_CONFIG_DIR>/pods
-    mountPropagation: "Bidirectional"
+    mountPropagation: Bidirectional
   - name: driver-path
     mountPath: <KUBELET_CONFIG_DIR>/plugins/csi-isilon
-    mountPropagation: "Bidirectional"
+    mountPropagation: Bidirectional
   - name: csi-path
     mountPath: <KUBELET_CONFIG_DIR>/plugins/kubernetes.io/csi
-    mountPropagation: "Bidirectional"
+    mountPropagation: Bidirectional
   - name: dev
     mountPath: /dev
   - name: usr-bin
@@ -58,4 +59,4 @@ volumeMounts:
   - name: var-run
     mountPath: /var/run
   - name: csi-isilon-config-params
-    mountPath: /csi-isilon-config-params 
+    mountPath: /csi-isilon-config-params

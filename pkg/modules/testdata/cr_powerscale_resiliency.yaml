@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
@@ -5,12 +6,12 @@ metadata:
   namespace: isilon
 spec:
   driver:
-    csiDriverType: "isilon"
+    csiDriverType: isilon
     configVersion: v2.11.0
     authSecret: isilon-creds-custom
     replicas: 1
     common:
-      image: "dellemc/csi-isilon:v2.11.0"
+      image: dellemc/csi-isilon:v2.11.0
       imagePullPolicy: IfNotPresent
   modules:
     - name: resiliency
@@ -26,17 +27,17 @@ spec:
           image: dellemc/podmon:v1.10.0
           imagePullPolicy: IfNotPresent
           args:
-            - "--labelvalue=csi-isilon"
-            - "--arrayConnectivityPollRate=60"
-            - "--skipArrayConnectionValidation=false"
-            - "--driverPodLabelValue=dell-storage"
-            - "--ignoreVolumelessPods=false"
-            - "--arrayConnectivityConnectionLossThreshold=3"
+            - --labelvalue=csi-isilon
+            - --arrayConnectivityPollRate=60
+            - --skipArrayConnectionValidation=false
+            - --driverPodLabelValue=dell-storage
+            - --ignoreVolumelessPods=false
+            - --arrayConnectivityConnectionLossThreshold=3
             # Below 4 args should not be modified.
-            - "--csisock=unix:/var/run/csi/csi.sock"
-            - "--mode=controller"
-            - "--driverPath=csi-isilon.dellemc.com"
-            - "--driver-config-params=/csi-isilon-config-params/driver-config-params.yaml"
+            - --csisock=unix:/var/run/csi/csi.sock
+            - --mode=controller
+            - --driverPath=csi-isilon.dellemc.com
+            - --driver-config-params=/csi-isilon-config-params/driver-config-params.yaml
         - name: podmon-node
           image: dellemc/podmon:v1.10.0
           imagePullPolicy: IfNotPresent
@@ -44,16 +45,16 @@ spec:
             # podmonAPIPort: Defines the port to be used within the kubernetes cluster
             # Allowed values: Any valid and free port (string)
             # Default value: 8083
-            - name: "X_CSI_PODMON_API_PORT"
-              value: "8083"
+            - name: X_CSI_PODMON_API_PORT
+              value: '8083'
           args:
-            - "--labelvalue=csi-isilon"
-            - "--arrayConnectivityPollRate=60"
-            - "--leaderelection=false"
-            - "--driverPodLabelValue=dell-storage"
-            - "--ignoreVolumelessPods=false"
+            - --labelvalue=csi-isilon
+            - --arrayConnectivityPollRate=60
+            - --leaderelection=false
+            - --driverPodLabelValue=dell-storage
+            - --ignoreVolumelessPods=false
             # Below 4 args should not be modified.
-            - "--csisock=unix:/var/lib/kubelet/plugins/csi-isilon/csi_sock"
-            - "--mode=node"
-            - "--driverPath=csi-isilon.dellemc.com"
-            - "--driver-config-params=/csi-isilon-config-params/driver-config-params.yaml"
+            - --csisock=unix:/var/lib/kubelet/plugins/csi-isilon/csi_sock
+            - --mode=node
+            - --driverPath=csi-isilon.dellemc.com
+            - --driver-config-params=/csi-isilon-config-params/driver-config-params.yaml

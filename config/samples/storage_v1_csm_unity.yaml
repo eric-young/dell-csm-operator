@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
@@ -5,12 +6,12 @@ metadata:
   namespace: unity
 spec:
   driver:
-    csiDriverType: "unity"
+    csiDriverType: unity
     csiDriverSpec:
       # fsGroupPolicy: Defines if the underlying volume supports changing ownership and permission of the volume before being mounted.
       # Allowed values: ReadWriteOnceWithFSType, File , None
       # Default value: ReadWriteOnceWithFSType
-      fSGroupPolicy: "ReadWriteOnceWithFSType"
+      fSGroupPolicy: ReadWriteOnceWithFSType
       # storageCapacity: Helps the scheduler to schedule the pod on a node satisfying the topology constraints, only if the requested capacity is available on the storage array
       # Allowed values:
       #   true: enable storage capacity tracking
@@ -23,7 +24,7 @@ spec:
     forceUpdate: false
     forceRemoveDriver: true
     common:
-      image: "dellemc/csi-unity:v2.11.0"
+      image: dellemc/csi-unity:v2.11.0
       imagePullPolicy: IfNotPresent
       envs:
         # X_CSI_UNITY_ALLOW_MULTI_POD_ACCESS - Flag to enable sharing of volumes across multiple pods within the same node in RWO access mode.
@@ -31,20 +32,20 @@ spec:
         # Default value: "false"
         # Examples : "true" , "false"
         - name: X_CSI_UNITY_ALLOW_MULTI_POD_ACCESS
-          value: "false"
+          value: 'false'
         - name: X_CSI_EPHEMERAL_STAGING_PATH
-          value: "/var/lib/kubelet/plugins/kubernetes.io/csi/pv/"
+          value: /var/lib/kubelet/plugins/kubernetes.io/csi/pv/
         # X_CSI_ISCSI_CHROOT is the path to which the driver will chroot before
         # running any iscsi commands. This value should only be set when instructed
         # by technical support
         - name: X_CSI_ISCSI_CHROOT
-          value: "/noderoot"
+          value: /noderoot
         # X_CSI_UNITY_SYNC_NODEINFO_INTERVAL - Time interval to add node info to array. Default 15 minutes. Minimum value should be 1.
         # Allowed values: integer
         # Default value: 15
         # Examples : 0 , 2
         - name: X_CSI_UNITY_SYNC_NODEINFO_INTERVAL
-          value: "15"
+          value: '15'
         # Specify kubelet config dir path.
         # Ensure that the config.yaml file is present at this path.
         # Default value: /var/lib/kubelet
@@ -59,20 +60,20 @@ spec:
         # Allowed values: "TEXT" or "JSON"
         # Default value: "TEXT"
         - name: CSI_LOG_FORMAT
-          value: "TEXT"
+          value: TEXT
         # TENANT_NAME - Tenant name that need to added while adding host entry to the array.
         # Allowed values: string
         # Default value: ""
         # Examples : "tenant2" , "tenant3"
         - name: TENANT_NAME
-          value: ""
+          value: ''
         # CERT_SECRET_COUNT: Represents number of certificate secrets, which user is going to create for
         # ssl authentication. (unity-cert-0..unity-cert-n)
         # This field is only verified if X_CSI_UNITY_SKIP_CERTIFICATE_VALIDATION is set to false
         # Allowed values: n, where n > 0
         # Default value: None          
         - name: CERT_SECRET_COUNT
-          value: "1"
+          value: '1'
         # X_CSI_UNITY_SKIP_CERTIFICATE_VALIDATION: Specifies if the driver is going to validate unisphere certs while connecting to the Unisphere REST API interface.
         # If it is set to false, then a secret unity-certs has to be created with an X.509 certificate of CA which signed the Unisphere certificate
         # Allowed values:
@@ -80,12 +81,12 @@ spec:
         #   false: verify Unisphere API server's certificates 
         # Default value: true	
         - name: X_CSI_UNITY_SKIP_CERTIFICATE_VALIDATION
-          value: "true"
+          value: 'true'
     sideCars:
       # 'csivol' represents a string prepended to each volume created by the CSI driver
       - name: provisioner
         image: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
-        args: ["--volume-name-prefix=csivol"]
+        args: [--volume-name-prefix=csivol]
       - name: attacher
         image: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
       - name: registrar
@@ -105,7 +106,7 @@ spec:
         #  args: ["--capacity-poll-interval=5m"]
 
         enabled: false
-        args: ["--monitor-interval=60s"]
+        args: [--monitor-interval=60s]
         image: registry.k8s.io/sig-storage/csi-external-health-monitor-controller:v0.11.0
     controller:
       envs:
@@ -116,7 +117,7 @@ spec:
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
       nodeSelector:
       # Uncomment if nodes you wish to use have the node-role.kubernetes.io/control-plane taint
       #  node-role.kubernetes.io/control-plane: ""
@@ -137,7 +138,7 @@ spec:
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
         # X_CSI_ALLOWED_NETWORKS: Custom networks for Unity export
         # Specify list of networks which can be used for NFS I/O traffic; CIDR format should be used.
         # Allowed values: list of one or more networks (comma separated)
@@ -146,7 +147,7 @@ spec:
         # CIDR format should be used
         # eg: "192.168.1.0/24, 192.168.100.0/22"
         - name: X_CSI_ALLOWED_NETWORKS
-          value: ""
+          value: ''
       # nodeSelector: Define node selection constraints for node pods.
       # For the pod to be eligible to run on a node, the node must have each
       # of the indicated key-value pairs as labels.

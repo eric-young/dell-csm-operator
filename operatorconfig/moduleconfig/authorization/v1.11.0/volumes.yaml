@@ -1,3 +1,4 @@
+---
 - name: karavi-authorization-config
   secret:
     secretName: karavi-authorization-config

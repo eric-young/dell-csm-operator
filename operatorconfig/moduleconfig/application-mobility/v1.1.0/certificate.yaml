@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
@@ -13,8 +14,8 @@ metadata:
   namespace: <NAMESPACE>
 spec:
   dnsNames:
-  - <NAMESPACE>-webhook-service.<NAMESPACE>.svc
-  - <NAMESPACE>-webhook-service.<NAMESPACE>.svc.cluster.local
+    - <NAMESPACE>-webhook-service.<NAMESPACE>.svc
+    - <NAMESPACE>-webhook-service.<NAMESPACE>.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: <NAMESPACE>-selfsigned-issuer

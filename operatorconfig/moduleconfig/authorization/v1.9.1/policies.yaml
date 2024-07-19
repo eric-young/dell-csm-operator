@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -236,7 +237,7 @@ metadata:
   name: sdc-approve
   namespace: <NAMESPACE>
 data:
-  sdc-approve.rego: |
+  sdc-approve.rego: |-
     package karavi.sdc.approve
 
     import data.karavi.common

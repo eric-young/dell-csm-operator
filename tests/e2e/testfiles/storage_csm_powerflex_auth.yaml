@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
@@ -5,36 +6,36 @@ metadata:
   namespace: test-vxflexos
 spec:
   driver:
-    csiDriverType: "powerflex"
+    csiDriverType: powerflex
     csiDriverSpec:
       # fsGroupPolicy: Defines if the underlying volume supports changing ownership and permission of the volume before being mounted.
       # Allowed values: ReadWriteOnceWithFSType, File , None
       # Default value: ReadWriteOnceWithFSType
-      fSGroupPolicy: "File"
+      fSGroupPolicy: File
     configVersion: v2.11.0
     replicas: 1
     dnsPolicy: ClusterFirstWithHostNet
     forceUpdate: false
     forceRemoveDriver: true
     common:
-      image: "dellemc/csi-vxflexos:nightly"
+      image: dellemc/csi-vxflexos:nightly
       imagePullPolicy: Always
       envs:
         - name: X_CSI_VXFLEXOS_ENABLELISTVOLUMESNAPSHOT
-          value: "false"
+          value: 'false'
         - name: X_CSI_VXFLEXOS_ENABLESNAPSHOTCGDELETE
-          value: "false"
+          value: 'false'
         - name: X_CSI_DEBUG
-          value: "true"
+          value: 'true'
         - name: X_CSI_ALLOW_RWO_MULTI_POD_ACCESS
-          value: "false"
+          value: 'false'
         # Specify kubelet config dir path.
         # Ensure that the config.yaml file is present at this path.
         # Default value: None
         - name: KUBELET_CONFIG_DIR
-          value: "/var/lib/kubelet"
-        - name: "CERT_SECRET_COUNT"
-          value: "0"
+          value: /var/lib/kubelet
+        - name: CERT_SECRET_COUNT
+          value: '0'
     sideCars:
       # sdc-monitor is disabled by default, due to high CPU usage
       - name: sdc-monitor
@@ -42,14 +43,14 @@ spec:
         image: dellemc/sdc:4.5.2.1
         envs:
           - name: HOST_PID
-            value: "1"
+            value: '1'
           - name: MDM
-            value: "10.x.x.x,10.x.x.x" #provide MDM value
+            value: 10.x.x.x,10.x.x.x    # provide MDM value
       # health monitor is disabled by default, refer to driver documentation before enabling it
       # Also set the env variable controller.envs.X_CSI_HEALTH_MONITOR_ENABLED  to "true".
       - name: csi-external-health-monitor-controller
         enabled: false
-        args: ["--monitor-interval=60s"]
+        args: [--monitor-interval=60s]
     controller:
       envs:
         # X_CSI_HEALTH_MONITOR_ENABLED: Enable/Disable health monitor of CSI volumes from Controller plugin - volume condition.
@@ -59,7 +60,7 @@ spec:
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
       #"controller.nodeSelector" defines what nodes would be selected for pods of controller deployment
       # Leave as blank to use all nodes
       # Allowed values: map of key-value pairs
@@ -92,7 +93,7 @@ spec:
         #   false: disable checking of health condition of CSI volumes
         # Default value: false
         - name: X_CSI_HEALTH_MONITOR_ENABLED
-          value: "false"
+          value: 'false'
       # "node.nodeSelector" defines what nodes would be selected for pods of node daemonset
       # Leave as blank to use all nodes
       # Allowed values: map of key-value pairs
@@ -123,7 +124,7 @@ spec:
         name: sdc
         envs:
           - name: MDM
-            value: "10.x.x.x,10.x.x.x" #provide MDM value
+            value: 10.x.x.x,10.x.x.x    # provide MDM value
   modules:
     # Authorization: enable csm-authorization for RBAC
     - name: authorization
@@ -135,8 +136,8 @@ spec:
           image: dellemc/csm-authorization-sidecar:nightly
           envs:
             # proxyHost: hostname of the csm-authorization server
-            - name: "PROXY_HOST"
-              value: "authorization-ingress-nginx-controller.authorization.svc.cluster.local"
+            - name: PROXY_HOST
+              value: authorization-ingress-nginx-controller.authorization.svc.cluster.local
             # skipCertificateValidation: Enable/Disable certificate validation of the csm-authorization server
-            - name: "SKIP_CERTIFICATE_VALIDATION"
-              value: "true"
+            - name: SKIP_CERTIFICATE_VALIDATION
+              value: 'true'

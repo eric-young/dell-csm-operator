@@ -1,3 +1,4 @@
+---
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,16 +18,16 @@ metadata:
   namespace: powermax
 spec:
   driver:
-    csiDriverType: "powermax"
+    csiDriverType: powermax
     configVersion: v2.11.0
     authSecret: powermax-creds
     replicas: 1
     common:
-      image: "dellemc/csi-powermax:v2.11.0"
+      image: dellemc/csi-powermax:v2.11.0
       imagePullPolicy: IfNotPresent
   modules:
     # CSI Powermax Reverseproxy is a mandatory module
-    - name: "csireverseproxy"
+    - name: csireverseproxy
       # enabled: Always set to true
       enabled: true
       configVersion: v2.10.0
@@ -41,13 +42,13 @@ spec:
             # Default value: None
             # Example: "tls-secret"
             - name: X_CSI_REVPROXY_TLS_SECRET
-              value: "csirevproxy-tls-secret"
+              value: csirevproxy-tls-secret
             - name: X_CSI_REVPROXY_PORT
-              value: "2222"
+              value: '2222'
             - name: X_CSI_CONFIG_MAP_NAME
-              value: "powermax-reverseproxy-config"
-            - name: "DeployAsSidecar"
-              value: "false"
+              value: powermax-reverseproxy-config
+            - name: DeployAsSidecar
+              value: 'false'
     - name: authorization
       # enable: Enable/Disable csm-authorization
       enabled: false
@@ -56,8 +57,8 @@ spec:
           image: dellemc/csm-authorization-sidecar:v1.11.0
           envs:
             # proxyHost: hostname of the csm-authorization server
-            - name: "PROXY_HOST"
-              value: "testing-proxy-host"
+            - name: PROXY_HOST
+              value: testing-proxy-host
             # skipCertificateValidation: Enable/Disable certificate validation of the csm-authorization server
-            - name: "SKIP_CERTIFICATE_VALIDATION"
-              value: "true"
+            - name: SKIP_CERTIFICATE_VALIDATION
+              value: 'true'

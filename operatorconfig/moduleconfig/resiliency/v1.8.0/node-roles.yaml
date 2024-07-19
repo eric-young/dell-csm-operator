@@ -1,3 +1,4 @@
+---
 #
 #
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
@@ -13,9 +14,9 @@
 # limitations under the License.
 #
 #
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch", "update", "delete"]
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "watch", "list", "delete", "update", "create"]
+- apiGroups: ['']
+  resources: [pods]
+  verbs: [get, list, watch, update, delete]
+- apiGroups: [coordination.k8s.io]
+  resources: [leases]
+  verbs: [get, watch, list, delete, update, create]

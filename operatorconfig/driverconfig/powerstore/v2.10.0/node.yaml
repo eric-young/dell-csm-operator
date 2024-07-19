@@ -1,3 +1,4 @@
+---
 #
 #
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
@@ -24,31 +25,31 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: <DriverDefaultReleaseName>-node
 rules:
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["create", "delete", "get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list", "watch", "update", "patch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["security.openshift.io"]
-    resourceNames: ["privileged"]
-    resources: ["securitycontextconstraints"]
-    verbs: ["use"]
+  - apiGroups: ['']
+    resources: [persistentvolumes]
+    verbs: [create, delete, get, list, watch, update]
+  - apiGroups: ['']
+    resources: [persistentvolumeclaims]
+    verbs: [get, list, watch, update]
+  - apiGroups: ['']
+    resources: [events]
+    verbs: [get, list, watch, create, update, patch]
+  - apiGroups: ['']
+    resources: [nodes]
+    verbs: [get, list, watch, update, patch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [get, list, watch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [security.openshift.io]
+    resourceNames: [privileged]
+    resources: [securitycontextconstraints]
+    verbs: [use]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -80,8 +81,8 @@ spec:
       annotations:
         kubectl.kubernetes.io/default-container: driver
     spec:
-      #nodeSelector:
-      #tolerations:
+      # nodeSelector:
+      # tolerations:
       serviceAccount: <DriverDefaultReleaseName>-node
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
@@ -91,14 +92,14 @@ spec:
           securityContext:
             privileged: true
             capabilities:
-              add: ["SYS_ADMIN"]
+              add: [SYS_ADMIN]
             allowPrivilegeEscalation: true
           image: dellemc/csi-powerstore:v2.10.0
-          imagePullPolicy:  IfNotPresent
-          command: [ "/csi-powerstore" ]
+          imagePullPolicy: IfNotPresent
+          command: [/csi-powerstore]
           args:
-            - "--array-config=/powerstore-config/config"
-            - "--driver-config-params=/powerstore-config-params/driver-config-params.yaml"
+            - --array-config=/powerstore-config/config
+            - --driver-config-params=/powerstore-config-params/driver-config-params.yaml
           env:
             - name: ENABLE_TRACING
               value:
@@ -122,28 +123,28 @@ spec:
             - name: X_CSI_POWERSTORE_TMP_DIR
               value: <KUBELET_CONFIG_DIR>/plugins/csi-powerstore.dellemc.com/tmp
             - name: X_CSI_DRIVER_NAME
-              value: "csi-powerstore.dellemc.com"
+              value: csi-powerstore.dellemc.com
             - name: X_CSI_FC_PORTS_FILTER_FILE_PATH
               value: <X_CSI_FC_PORTS_FILTER_FILE_PATH>
             - name: X_CSI_POWERSTORE_ENABLE_CHAP
-              value: "<X_CSI_POWERSTORE_ENABLE_CHAP>"
+              value: <X_CSI_POWERSTORE_ENABLE_CHAP>
             - name: X_CSI_POWERSTORE_CONFIG_PATH
               value: /powerstore-config/config
             - name: X_CSI_POWERSTORE_CONFIG_PARAMS_PATH
               value: /powerstore-config-params/driver-config-params.yaml
             - name: GOPOWERSTORE_DEBUG
-              value: "true"
+              value: 'true'
             - name: X_CSI_HEALTH_MONITOR_ENABLED
-              value: "<X_CSI_HEALTH_MONITOR_ENABLED>"
+              value: <X_CSI_HEALTH_MONITOR_ENABLED>
           volumeMounts:
             - name: driver-path
               mountPath: <KUBELET_CONFIG_DIR>/plugins/csi-powerstore.dellemc.com
             - name: csi-path
               mountPath: <KUBELET_CONFIG_DIR>/plugins/kubernetes.io/csi
-              mountPropagation: "Bidirectional"
+              mountPropagation: Bidirectional
             - name: pods-path
               mountPath: <KUBELET_CONFIG_DIR>/pods
-              mountPropagation: "Bidirectional"
+              mountPropagation: Bidirectional
             - name: dev
               mountPath: /dev
             - name: sys
@@ -166,8 +167,8 @@ spec:
           image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.1
           imagePullPolicy: IfNotPresent
           args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
+            - --v=5
+            - --csi-address=$(ADDRESS)
             - --kubelet-registration-path=<KUBELET_CONFIG_DIR>/plugins/csi-powerstore.dellemc.com/csi_sock
           env:
             - name: ADDRESS

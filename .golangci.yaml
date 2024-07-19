@@ -1,3 +1,4 @@
+---
 run:
   timeout: 20m
   tests: true
@@ -9,7 +10,8 @@ issues:
   max-same-issues: 0
   new: false
   exclude:
-    - "parameter 'clusterConfigData' seems to be unused, consider removing or renaming it as _"
+    - parameter 'clusterConfigData' seems to be unused, consider removing or renaming
+      it as _
 
 output:
   print-linter-name: true

@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -6,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: connectivity-client-docker-k8s
     app.kubernetes.io/instance: ApexConnectivityClient
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: 1.1.0
     app.kubernetes.io/managed-by: CSMOperator
 ---
 apiVersion: v1
@@ -16,53 +17,53 @@ metadata:
   namespace: <NAMESPACE>
 data:
   AGGREGATOR_URL: <AGGREGATOR_URL>
-  ANNOUNCE_INTERVAL: "5m"
-  MIN_BACKOFF: "5s"
-  MAX_BACKOFF: "1m"
-  DCM_CLIENT_SERVER_PORT: "9000"
-  DCM_IDENTITY_LOCATION: "/home/connectivity-client/.certs"
+  ANNOUNCE_INTERVAL: 5m
+  MIN_BACKOFF: 5s
+  MAX_BACKOFF: 1m
+  DCM_CLIENT_SERVER_PORT: '9000'
+  DCM_IDENTITY_LOCATION: /home/connectivity-client/.certs
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: connectivity-client-docker-k8s
 rules:
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["list", "watch"]
-  - apiGroups: [""]
-    resources: ["namespaces"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["list", "watch", "create", "update", "delete"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["list", "watch", "create", "delete"]
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["list", "watch"]
-  - apiGroups: ["apps"]
-    resources: ["statefulsets"]
-    verbs: ["list", "watch", "update", "patch"]
-  - apiGroups: ["apps"]
-    resources: ["daemonsets"]
-    verbs: ["list", "watch"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["csidrivers"]
-    verbs: ["list", "watch", "get"]
-  - apiGroups: ["storage.dell.com"]
-    resources: ["containerstoragemodules"]
-    verbs: ["list", "get", "watch", "update"]
-  - apiGroups: ["mobility.storage.dell.com"]
-    resources: ["backups"]
-    verbs: ["list", "get"]
+  - apiGroups: ['']
+    resources: [pods]
+    verbs: [list, watch]
+  - apiGroups: ['']
+    resources: [namespaces]
+    verbs: [get, list, watch]
+  - apiGroups: ['']
+    resources: [persistentvolumeclaims]
+    verbs: [list, watch, update]
+  - apiGroups: ['']
+    resources: [persistentvolumes]
+    verbs: [list, watch, create, update, delete]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [list, watch, create, delete]
+  - apiGroups: [apps]
+    resources: [deployments]
+    verbs: [list, watch]
+  - apiGroups: [apps]
+    resources: [statefulsets]
+    verbs: [list, watch, update, patch]
+  - apiGroups: [apps]
+    resources: [daemonsets]
+    verbs: [list, watch]
+  - apiGroups: ['']
+    resources: [nodes]
+    verbs: [list, watch]
+  - apiGroups: [storage.k8s.io]
+    resources: [csidrivers]
+    verbs: [list, watch, get]
+  - apiGroups: [storage.dell.com]
+    resources: [containerstoragemodules]
+    verbs: [list, get, watch, update]
+  - apiGroups: [mobility.storage.dell.com]
+    resources: [backups]
+    verbs: [list, get]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -84,12 +85,12 @@ metadata:
   name: connectivity-client-docker-k8s
   namespace: <NAMESPACE>
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["list", "get", "create", "update", "delete", "watch"]
-  - apiGroups: [""]
-    resources: ["configmaps"]
-    verbs: ["get", "create", "delete", "update"]
+  - apiGroups: ['']
+    resources: [secrets]
+    verbs: [list, get, create, update, delete, watch]
+  - apiGroups: ['']
+    resources: [configmaps]
+    verbs: [get, create, delete, update]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -111,9 +112,9 @@ metadata:
   name: connectivity-client-docker-k8s
   namespace: default
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "create", "update", "delete", "watch", "list"]
+  - apiGroups: ['']
+    resources: [secrets]
+    verbs: [get, create, update, delete, watch, list]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -133,20 +134,20 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: connectivity-client-docker-k8s
-  namespace: "karavi"
+  namespace: karavi
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["list", "get", "create", "update", "delete", "watch"]
-  - apiGroups: [""]
-    resources: ["configmaps"]
-    verbs: ["get", "create", "delete", "update"]
+  - apiGroups: ['']
+    resources: [secrets]
+    verbs: [list, get, create, update, delete, watch]
+  - apiGroups: ['']
+    resources: [configmaps]
+    verbs: [get, create, delete, update]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: connectivity-client-docker-k8s
-  namespace: "karavi"
+  namespace: karavi
 subjects:
   - kind: ServiceAccount
     name: connectivity-client-docker-k8s
@@ -160,26 +161,26 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: connectivity-client-docker-k8s
-  namespace: "dell-csm"
+  namespace: dell-csm
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["list", "get", "create", "update", "delete", "watch"]
-  - apiGroups: ["storage.dell.com"]
-    resources: ["containerstoragemodules"]
-    verbs: ["create", "delete"]
-  - apiGroups: [""]
-    resources: ["configmaps"]
-    verbs: ["get", "create", "delete", "update"]
-  - apiGroups: ["mobility.storage.dell.com"]
-    resources: ["backups"]
-    verbs: ["create"]
+  - apiGroups: ['']
+    resources: [secrets]
+    verbs: [list, get, create, update, delete, watch]
+  - apiGroups: [storage.dell.com]
+    resources: [containerstoragemodules]
+    verbs: [create, delete]
+  - apiGroups: ['']
+    resources: [configmaps]
+    verbs: [get, create, delete, update]
+  - apiGroups: [mobility.storage.dell.com]
+    resources: [backups]
+    verbs: [create]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: connectivity-client-docker-k8s
-  namespace: "dell-csm"
+  namespace: dell-csm
 subjects:
   - kind: ServiceAccount
     name: connectivity-client-docker-k8s
@@ -197,7 +198,7 @@ metadata:
   labels:
     app.kubernetes.io/name: connectivity-client-docker-k8s
     app.kubernetes.io/instance: ApexConnectivityClient
-    app.kubernetes.io/version: "1.1.0"
+    app.kubernetes.io/version: 1.1.0
     app.kubernetes.io/managed-by: CSMOperator
 spec:
   serviceName: connectivity-client-docker-k8s-headless-service
@@ -223,12 +224,12 @@ spec:
             - ALL
       containers:
         - name: connectivity-client-docker-k8s
-          image: "<CONNECTIVITY_CLIENT_IMAGE>"
+          image: <CONNECTIVITY_CLIENT_IMAGE>
           imagePullPolicy: IfNotPresent
           args:
-            - "--aggregator"
+            - --aggregator
             - <AGGREGATOR_URL>
-            - "--announce.interval"
+            - --announce.interval
             - 5m
             - <CACERT_OPTION>
             - <CACERTS>
@@ -267,10 +268,10 @@ spec:
                   key: DCM_IDENTITY_LOCATION
           volumeMounts:
             - name: ca-certs
-              mountPath: "/opt/dellemc/certs"
+              mountPath: /opt/dellemc/certs
               readOnly: true
             - name: certs-store-tmpdir
-              mountPath: "/home/connectivity-client/.certs"
+              mountPath: /home/connectivity-client/.certs
           resources:
             limits:
               memory: 75M
@@ -305,15 +306,15 @@ spec:
               drop:
                 - ALL
         - name: kubernetes-proxy
-          image: "<KUBERNETES_PROXY_IMAGE>"
+          image: <KUBERNETES_PROXY_IMAGE>
           imagePullPolicy: IfNotPresent
-          command: ["kubectl"]
+          command: [kubectl]
           args:
-            - "proxy"
-            - "--port=8001"
-            - "--address=127.0.0.1"
-            - "--accept-hosts=^localhost$,^127.0.0.1$"
-            - "--v=5"
+            - proxy
+            - --port=8001
+            - --address=127.0.0.1
+            - --accept-hosts=^localhost$,^127.0.0.1$
+            - --v=5
           securityContext:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: false
@@ -323,7 +324,7 @@ spec:
               drop:
                 - ALL
         - name: cert-persister
-          image: "<CERT_PERSISTER_IMAGE>"
+          image: <CERT_PERSISTER_IMAGE>
           imagePullPolicy: IfNotPresent
           env:
             - name: DCM_IDENTITY_LOCATION
@@ -333,7 +334,7 @@ spec:
                   key: DCM_IDENTITY_LOCATION
           volumeMounts:
             - name: certs-store-tmpdir
-              mountPath: "/home/connectivity-client/.certs"
+              mountPath: /home/connectivity-client/.certs
           securityContext:
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: false
@@ -344,7 +345,7 @@ spec:
                 - ALL
       initContainers:
         - name: connectivity-client-init
-          image: "<ACC_INIT_CONTAINER_IMAGE>"
+          image: <ACC_INIT_CONTAINER_IMAGE>
           imagePullPolicy: IfNotPresent
           env:
             - name: DCM_IDENTITY_LOCATION
@@ -352,10 +353,12 @@ spec:
                 configMapKeyRef:
                   name: connectivity-client-docker-k8s-configmap
                   key: DCM_IDENTITY_LOCATION
-          command: ["sh", "-x", "-c", "if [ -s /dcm-client-secret-data/cert.pem ]; then cp -v /dcm-client-secret-data/cert.pem $DCM_IDENTITY_LOCATION/cert.pem; fi"]
+          command: [sh, -x, -c, 'if [ -s /dcm-client-secret-data/cert.pem ]; then
+                cp -v /dcm-client-secret-data/cert.pem $DCM_IDENTITY_LOCATION/cert.pem;
+                fi']
           volumeMounts:
             - name: certs-store-tmpdir
-              mountPath: "/home/connectivity-client/.certs"
+              mountPath: /home/connectivity-client/.certs
             - name: connectivity-client-docker-k8s-cert
               mountPath: /dcm-client-secret-data
           securityContext:

@@ -1,3 +1,4 @@
+---
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,9 +23,9 @@ metadata:
   name: csipowermax-reverseproxy
   namespace: <DriverDefaultReleaseNamespace>
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["list", "watch", "get"]
+  - apiGroups: ['']
+    resources: [secrets]
+    verbs: [list, watch, get]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -81,11 +82,11 @@ spec:
             - name: X_CSI_REVPROXY_CONFIG_FILE_NAME
               value: config.yaml
             - name: X_CSI_REVRPOXY_IN_CLUSTER
-              value: "true"
+              value: 'true'
             - name: X_CSI_REVPROXY_TLS_CERT_DIR
               value: /app/tls
             - name: X_CSI_REVPROXY_WATCH_NAMESPACE
-              value: <DriverDefaultReleaseNamespace> #Change this to the namespace where proxy will be installed
+              value: <DriverDefaultReleaseNamespace>  # Change this to the namespace where proxy will be installed
           volumeMounts:
             - name: configmap-volume
               mountPath: /etc/config/configmap

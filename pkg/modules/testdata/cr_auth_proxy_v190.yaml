@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
@@ -42,17 +43,17 @@ spec:
           # certificate: base64-encoded certificate for cert/private-key pair -- add certificate here to use custom certificates
           # for self-signed certs, leave empty string
           # Allowed values: string
-          certificate: ""
+          certificate: ''
 
           # privateKey: base64-encoded private key for cert/private-key pair -- add private key here to use custom certificates
           # for self-signed certs, leave empty string
           # Allowed values: string
-          privateKey: ""
+          privateKey: ''
 
           # proxy-server ingress will use this hostname
           # NOTE: an additional hostname can be configured in proxyServerIngress.hosts
           # NOTE: proxy-server ingress is configured to accept IP address connections so hostnames are not required
-          hostname: "csm-authorization.com"
+          hostname: csm-authorization.com
 
           # proxy-server ingress configuration
           proxyServerIngress:
@@ -72,7 +73,7 @@ spec:
           # to use a different storage class for redis, specify the name of the storage class
           # NOTE: the storage class must NOT be a storage class provisioned by a CSI driver using this installation of CSM Authorization
           # Default value: None
-          storageclass: "local-storage"
+          storageclass: local-storage
 
 ---
 apiVersion: v1
@@ -81,6 +82,6 @@ metadata:
   name: csm-config-params
   namespace: authorization
 data:
-  csm-config-params.yaml: |
+  csm-config-params.yaml: |-
     CONCURRENT_POWERFLEX_REQUESTS: 10
     LOG_LEVEL: debug

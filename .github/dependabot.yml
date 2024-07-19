@@ -1,3 +1,4 @@
+---
 # To get started with Dependabot version updates, you'll need to specify which
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
@@ -6,16 +7,16 @@
 version: 2
 updates:
   # github actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
       # Check for updates to GitHub Actions every week
-      interval: "weekly"
-      day: "saturday"
+      interval: weekly
+      day: saturday
     groups:
       github-actions:
         patterns:
-          - "*"
+          - '*'
 
   # operator packages
   - package-ecosystem: docker
@@ -27,8 +28,8 @@ updates:
       # check daily
       interval: daily
       # at 6pm UTC
-      time: "18:00"
+      time: 18:00
     groups:
       operator:
         patterns:
-          - "*"
+          - '*'

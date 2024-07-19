@@ -1,3 +1,4 @@
+---
 general:
   vulnerabilities:
     # list of CVEs that are currently unfixed

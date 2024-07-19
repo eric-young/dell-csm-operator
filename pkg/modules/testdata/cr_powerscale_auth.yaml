@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
@@ -5,12 +6,12 @@ metadata:
   namespace: isilon
 spec:
   driver:
-    csiDriverType: "isilon"
+    csiDriverType: isilon
     configVersion: v2.11.0
     authSecret: isilon-creds-custom
     replicas: 1
     common:
-      image: "dellemc/csi-isilon:v2.11.0"
+      image: dellemc/csi-isilon:v2.11.0
       imagePullPolicy: IfNotPresent
   modules:
     - name: authorization
@@ -21,8 +22,8 @@ spec:
           image: dellemc/csm-authorization-sidecar:v1.11.0
           envs:
             # proxyHost: hostname of the csm-authorization server
-            - name: "PROXY_HOST"
-              value: "testing-proxy-host"
+            - name: PROXY_HOST
+              value: testing-proxy-host
             # skipCertificateValidation: Enable/Disable certificate validation of the csm-authorization server
-            - name: "SKIP_CERTIFICATE_VALIDATION"
-              value: "true"
+            - name: SKIP_CERTIFICATE_VALIDATION
+              value: 'true'

@@ -1,3 +1,4 @@
+---
 apiVersion: storage.dell.com/v1
 kind: ApexConnectivityClient
 metadata:
@@ -5,7 +6,7 @@ metadata:
   namespace: dell-connectivity-client
 spec:
   client:
-    csmClientType: "apexConnectivityClient"
+    csmClientType: apexConnectivityClient
     configVersion: v1.0.0
     forceRemoveClient: true
     connectionTarget: connect-p3.dell.com

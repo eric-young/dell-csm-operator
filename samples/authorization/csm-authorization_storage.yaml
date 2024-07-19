@@ -1,3 +1,4 @@
+---
 apiVersion: csm-authorization.storage.dell.com/v1alpha1
 kind: Storage
 metadata:

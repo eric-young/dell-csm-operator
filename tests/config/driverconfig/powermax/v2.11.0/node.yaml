@@ -1,3 +1,4 @@
+---
 # Copyright © 2023 Dell Inc. or its subsidiaries. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,31 +22,31 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: <DriverDefaultReleaseName>-node
 rules:
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["create", "delete", "get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list", "watch", "update", "patch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: [ "security.openshift.io" ]
-    resourceNames: [ "privileged" ]
-    resources: [ "securitycontextconstraints" ]
-    verbs: [ "use" ]
+  - apiGroups: ['']
+    resources: [persistentvolumes]
+    verbs: [create, delete, get, list, watch, update]
+  - apiGroups: ['']
+    resources: [persistentvolumeclaims]
+    verbs: [get, list, watch, update]
+  - apiGroups: ['']
+    resources: [events]
+    verbs: [get, list, watch, create, update, patch]
+  - apiGroups: ['']
+    resources: [nodes]
+    verbs: [get, list, watch, update, patch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [get, list, watch]
+  - apiGroups: [storage.k8s.io]
+    resources: [volumeattachments]
+    verbs: [get, list, watch, update]
+  - apiGroups: [security.openshift.io]
+    resourceNames: [privileged]
+    resources: [securitycontextconstraints]
+    verbs: [use]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -75,17 +76,17 @@ spec:
         app: <DriverDefaultReleaseName>-node
     spec:
       serviceAccount: <DriverDefaultReleaseName>-node
-      #nodeSelector:
-      #tolerations:
+      # nodeSelector:
+      # tolerations:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: driver
-          command: ["/csi-powermax.sh"]
+          command: [/csi-powermax.sh]
           securityContext:
             privileged: true
             capabilities:
-              add: ["SYS_ADMIN"]
+              add: [SYS_ADMIN]
             allowPrivilegeEscalation: true
           image: dellemc/csi-powermax:v2.11.0
           imagePullPolicy: IfNotPresent
@@ -95,15 +96,15 @@ spec:
             - name: CSI_ENDPOINT
               value: unix://<KUBELET_CONFIG_DIR>/plugins/powermax.emc.dell.com/csi_sock
             - name: X_CSI_MANAGED_ARRAYS
-              value: "<X_CSI_MANAGED_ARRAY>"
+              value: <X_CSI_MANAGED_ARRAY>
             - name: X_CSI_POWERMAX_ENDPOINT
-              value: "<X_CSI_POWERMAX_ENDPOINT>"
+              value: <X_CSI_POWERMAX_ENDPOINT>
             - name: X_CSI_K8S_CLUSTER_PREFIX
-              value: "<X_CSI_K8S_CLUSTER_PREFIX>"
+              value: <X_CSI_K8S_CLUSTER_PREFIX>
             - name: X_CSI_MODE
               value: node
             - name: X_CSI_PRIVATE_MOUNT_DIR
-              value: "<KUBELET_CONFIG_DIR>/plugins/powermax.emc.dell.com/disks"
+              value: <KUBELET_CONFIG_DIR>/plugins/powermax.emc.dell.com/disks
             - name: X_CSI_POWERMAX_SKIP_CERTIFICATE_VALIDATION
               value: true
             - name: X_CSI_POWERMAX_USER
@@ -122,15 +123,15 @@ spec:
                   apiVersion: v1
                   fieldPath: spec.nodeName
             - name: X_CSI_POWERMAX_ISCSI_ENABLE_CHAP
-              value: "<X_CSI_POWERMAX_ISCSI_ENABLE_CHAP>"
+              value: <X_CSI_POWERMAX_ISCSI_ENABLE_CHAP>
             - name: X_CSI_POWERMAX_PROXY_SERVICE_NAME
-              value: "csipowermax-reverseproxy"
+              value: csipowermax-reverseproxy
             - name: X_CSI_NODE_CHROOT
               value: noderoot
             - name: X_CSI_GRPC_MAX_THREADS
-              value: "50"
+              value: '50'
             - name: X_CSI_TRANSPORT_PROTOCOL
-              value: "<X_CSI_TRANSPORT_PROTOCOL>"
+              value: <X_CSI_TRANSPORT_PROTOCOL>
             - name: SSL_CERT_DIR
               value: /certs
             - name: X_CSI_POWERMAX_CONFIG_PATH
@@ -138,21 +139,21 @@ spec:
             - name: X_CSI_POWERMAX_TOPOLOGY_CONFIG_PATH
               value: /node-topology-config/topologyConfig.yaml
             - name: X_CSI_IG_NODENAME_TEMPLATE
-              value: "<X_CSI_IG_NODENAME_TEMPLATE>"
+              value: <X_CSI_IG_NODENAME_TEMPLATE>
             - name: X_CSI_IG_MODIFY_HOSTNAME
-              value: "<X_CSI_IG_MODIFY_HOSTNAME>"
+              value: <X_CSI_IG_MODIFY_HOSTNAME>
             - name: X_CSI_POWERMAX_PORTGROUPS
-              value: "<X_CSI_POWERMAX_PORTGROUPS>"
+              value: <X_CSI_POWERMAX_PORTGROUPS>
             - name: X_CSI_HEALTH_MONITOR_ENABLED
-              value: "<X_CSI_HEALTH_MONITOR_ENABLED>"
+              value: <X_CSI_HEALTH_MONITOR_ENABLED>
             - name: X_CSI_TOPOLOGY_CONTROL_ENABLED
-              value: "<X_CSI_TOPOLOGY_CONTROL_ENABLED>"
+              value: <X_CSI_TOPOLOGY_CONTROL_ENABLED>
             - name: X_CSI_VSPHERE_ENABLED
-              value: "<X_CSI_VSPHERE_ENABLED>"
+              value: <X_CSI_VSPHERE_ENABLED>
             - name: X_CSI_VSPHERE_PORTGROUP
-              value: "<X_CSI_VSPHERE_PORTGROUP>"
+              value: <X_CSI_VSPHERE_PORTGROUP>
             - name: X_CSI_VCENTER_HOST
-              value: "<X_CSI_VCENTER_HOST>"
+              value: <X_CSI_VCENTER_HOST>
             - name: X_CSI_VCENTER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -172,7 +173,7 @@ spec:
               mountPath: <KUBELET_CONFIG_DIR>/plugins/kubernetes.io/csi/volumeDevices
             - name: pods-path
               mountPath: <KUBELET_CONFIG_DIR>/pods
-              mountPropagation: "Bidirectional"
+              mountPropagation: Bidirectional
             - name: dev
               mountPath: /dev
             - name: sys
@@ -192,8 +193,8 @@ spec:
           image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
           imagePullPolicy: IfNotPresent
           args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
+            - --v=5
+            - --csi-address=$(ADDRESS)
             - --kubelet-registration-path=<KUBELET_CONFIG_DIR>/plugins/powermax.emc.dell.com/csi_sock
           env:
             - name: ADDRESS

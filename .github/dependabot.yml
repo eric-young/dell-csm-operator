@@ -20,9 +20,6 @@ updates:
   # operator packages
   - package-ecosystem: docker
     directories:
-      - /bundle
-      - /config
-      - /deploy
       - /operatorconfig
     labels:
       - dependencies

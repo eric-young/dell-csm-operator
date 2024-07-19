@@ -17,7 +17,7 @@ updates:
         patterns:
           - "*"
 
-  # cosi packages
+  # operator packages
   - package-ecosystem: docker
     directories:
       - /bundle
@@ -32,6 +32,6 @@ updates:
       # at 6pm UTC
       time: "18:00"
     groups:
-      cosi:
+      operator:
         patterns:
           - "*"

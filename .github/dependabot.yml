@@ -20,7 +20,7 @@ updates:
   # operator packages
   - package-ecosystem: docker
     directories:
-      - /operatorconfig
+      - /bundle/manifests
     labels:
       - dependencies
     schedule:

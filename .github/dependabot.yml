@@ -12,6 +12,7 @@ updates:
       # Check for updates to GitHub Actions every week
       interval: "weekly"
       day: "saturday"
+    target-branch: "release-next"
     groups:
       github-actions:
         patterns:
@@ -28,6 +29,7 @@ updates:
       interval: daily
       # at 6pm UTC
       time: "18:00"
+    target-branch: "release-next"
     groups:
       operator:
         patterns:
